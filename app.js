@@ -22,40 +22,20 @@ app.use('/users', usersRouter);
 
 // Define a new route handler for /computation
 app.get('/computation', (req, res) => {
-  // Extract the last digit from your ID (e.g., 'dronamraju' from your full name)
-  const id = 'dronamraju';
-  const lastDigit = id[id.length - 1];
+  // Parse the query parameter 'x' or use a random value
+  const x = parseFloat(req.query.x) || Math.random() * 100; // Change the range or default value as needed
 
-  // Parse the query parameter 'x' (if it exists)
-  const x = parseFloat(req.query.x);
-
-  // Use the last digit to determine the Math function
-  let result;
-  switch (lastDigit % 4) {
-    case 0:
-      result = Math.log(x || Math.random());
-      break;
-    case 1:
-      result = Math.log10(x || Math.random());
-      break;
-    case 2:
-      result = Math.exp(x || Math.random());
-      break;
-    case 3:
-      result = Math.sqrt(x || Math.random());
-      break;
-    default:
-      result = 'Invalid last digit';
-  }
+  // Apply the Math.log() function
+  const result = Math.log(x);
 
   // Construct the response string
-  const response = `[Math.log()] applied to ${x || 'a random value'} is ${result}`;
+  const response = `[Math.log()] applied to ${x} is ${result}`;
 
   // Send the response
   res.send(response);
 });
 
-// Catch 404 and forward to error handler
+// Catch 404 and forward to the error handler
 app.use(function(req, res, next) {
   next(createError(404));
 });
